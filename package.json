@@ -10,6 +10,7 @@
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "smoke:live": "node scripts/smoke.mjs",
+    "generate:counties": "node scripts/generate-counties.mjs",
     "build:cloudflare": "pnpm install && pnpm exec turbo run build --filter=@parcel-link/data && cd apps/web && pnpm run build:cloudflare",
     "deploy:cloudflare": "pnpm run build:cloudflare && cd apps/web && pnpm run deploy"
   },

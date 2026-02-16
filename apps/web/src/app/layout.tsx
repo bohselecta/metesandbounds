@@ -1,4 +1,16 @@
 import type { Metadata } from "next";
+import { Fraunces, Inter } from "next/font/google";
+import "./globals.css";
+
+const sans = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans"
+});
+
+const serif = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-serif"
+});
 
 export const metadata: Metadata = {
   title: "Parcel Link Finder",
@@ -11,8 +23,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body style={{ fontFamily: "system-ui, sans-serif", margin: 0, padding: 24 }}>
+    <html lang="en" className={`${sans.variable} ${serif.variable}`}>
+      <body>
         {children}
       </body>
     </html>

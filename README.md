@@ -1,6 +1,6 @@
 # Parcel Link Finder
 
-Takes a US address and returns the official property-search link for that county.
+Takes a US address and returns the official property-search link for that county. We return a county link when we have one; otherwise the state property-tax or assessor portal so you can find your county.
 
 ## Setup
 
@@ -14,7 +14,7 @@ pnpm install
 pnpm dev
 ```
 
-Opens the web app at [http://localhost:3000](http://localhost:3000). Enter an address and click **Find link** to get the county’s property search URL (when we have one).
+Opens the web app at [http://localhost:3000](http://localhost:3000). Enter an address and click **Find link** to get the county’s property search URL or your state’s portal.
 
 ## Scripts
 
@@ -25,11 +25,16 @@ Opens the web app at [http://localhost:3000](http://localhost:3000). Enter an ad
 | `pnpm lint`    | Run ESLint                     |
 | `pnpm typecheck` | Type-check all packages      |
 | `pnpm test`    | Run unit tests (registry + API route with mocked geocode) |
+| `pnpm run generate:counties` | Regenerate `packages/data/src/counties.json` from Census FIPS (run when updating county list). |
 | `pnpm run smoke:live` | Optional: run against a live server (`pnpm dev` in another terminal). Uses `http://localhost:3000` by default; set `SMOKE_BASE` if the app runs on another port (e.g. `SMOKE_BASE=http://localhost:3001`). |
 
-## Adding a county
+## Adding a county link
 
-Edit the link registry in `packages/data/src/links.json`: add an entry with `state`, `countyFips`, `countyName`, and `propertySearchUrl`. Use 3-digit county FIPS (e.g. `453` for Travis County, TX). Redeploy the app if needed.
+Edit the link registry in `packages/data/src/links.json`: add an entry with `state`, `countyFips`, `countyName`, and `propertySearchUrl`. Use 3-digit county FIPS (e.g. `453` for Travis County, TX). Redeploy the app if needed. To bulk-merge from a CSV, you can add a script that reads columns (state, countyFips, countyName, propertySearchUrl) and merges into `links.json`.
+
+## State fallbacks
+
+When we don’t have a county-specific link, we return the state’s property-tax or assessor portal (50 states + DC). To add or update a state fallback, edit `packages/data/src/state_fallbacks.json`: each entry has `state`, `url`, and `label`.
 
 ## Deploy to Cloudflare (GitHub + Workers)
 
@@ -45,5 +50,5 @@ pnpm run deploy:cloudflare
 
 1. You submit an address.
 2. The app geocodes it with the [Census Bureau Geocoder](https://geocoding.geo.census.gov/) (no API key).
-3. It looks up the county (state + county FIPS) in a static registry.
-4. It returns the property-search URL for that county, or a message if we don’t have one yet.
+3. It looks up the county (state + county FIPS): first in the curated county registry, then in the state fallback list.
+4. It returns the property-search URL (county link when we have one, otherwise the state portal).

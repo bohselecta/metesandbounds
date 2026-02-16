@@ -10,20 +10,36 @@ describe("getLink", () => {
     expect(getLink("tx", "453")).toBe("https://travis.prodigycad.com/property-search");
   });
 
-  it("returns null for unknown jurisdiction", () => {
-    expect(getLink("CA", "037")).toBeNull();
+  it("returns state fallback URL when county not curated (e.g. CA)", () => {
+    const url = getLink("CA", "037");
+    expect(url).not.toBeNull();
+    expect(url).toContain("boe.ca.gov");
+  });
+
+  it("returns null for unknown state code", () => {
+    expect(getLink("XX", "000")).toBeNull();
   });
 });
 
 describe("getEntry", () => {
-  it("returns entry with countyName for Travis", () => {
+  it("returns curated entry with countyName for Travis", () => {
     const entry = getEntry("TX", "453");
     expect(entry).not.toBeNull();
+    expect(entry?.source).toBe("curated");
     expect(entry?.countyName).toBe("Travis");
-    expect(entry?.propertySearchUrl).toContain("travis.prodigycad.com");
+    expect(entry?.url).toContain("travis.prodigycad.com");
+    expect(entry?.label).toContain("Travis");
   });
 
-  it("returns null for unknown jurisdiction", () => {
+  it("returns state_fallback for county without curated link", () => {
+    const entry = getEntry("CA", "037");
+    expect(entry).not.toBeNull();
+    expect(entry?.source).toBe("state_fallback");
+    expect(entry?.url).toContain("boe.ca.gov");
+    expect(entry?.verified).toBe(true);
+  });
+
+  it("returns null for unknown state code", () => {
     expect(getEntry("XX", "000")).toBeNull();
   });
 });

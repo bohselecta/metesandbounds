@@ -7,6 +7,8 @@ export type LinkResponse = {
   normalizedAddress: string;
   countyName?: string;
   state?: string;
+  source?: "curated" | "state_fallback";
+  label?: string;
   error?: string;
 };
 
@@ -29,15 +31,17 @@ export async function GET(request: NextRequest) {
         normalizedAddress: geo.normalizedAddress,
         countyName: geo.countyName,
         state: geo.state,
-        error: "No link for this county yet"
+        error: "No link for this state"
       } satisfies LinkResponse);
     }
 
     return NextResponse.json({
-      url: entry.propertySearchUrl,
+      url: entry.url,
       normalizedAddress: geo.normalizedAddress,
-      countyName: entry.countyName,
-      state: entry.state
+      countyName: entry.countyName ?? geo.countyName,
+      state: entry.state,
+      source: entry.source,
+      label: entry.label
     } satisfies LinkResponse);
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
