@@ -1,10 +1,11 @@
 :root {
   --paper: #fbfaf7;
-  --paper-bottom: #f5f2ea;
-  --ink: #161616;
+  --paper-bottom: #f7f3ea;
+  --ink: #1a1a1a;
   --ink-muted: #5b5b5b;
   --ink-meta: #7b7b7b;
   --line: rgba(22, 22, 22, 0.1);
+  --line-input: rgba(22, 22, 22, 0.12);
   --card: #ffffff;
   --accent: #c8a24a;
   --accent-dark: #9a7a2f;
@@ -34,6 +35,7 @@ body {
   min-height: 100vh;
   width: 100%;
   padding: 24px;
+  padding-top: 36px;
 }
 
 .plf-container {
@@ -42,57 +44,71 @@ body {
 }
 
 .plf-header {
-  margin-bottom: 24px;
+  padding-top: 0;
+  margin-bottom: 28px;
 }
 
 .plf-brandRow {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 14px;
 }
 
 .plf-brandMarkShell {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  background: var(--ink);
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #161616;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
 }
 
 .plf-brandMark {
-  width: 28px;
-  height: 28px;
+  width: 22px;
+  height: 22px;
   object-fit: contain;
 }
 
 .plf-title {
   font-family: var(--font-serif), "Fraunces", "Playfair Display", Georgia, serif;
   margin: 0 0 10px;
-  font-size: clamp(2.25rem, 4.2vw, 2.5rem);
-  line-height: 1.06;
+  font-size: clamp(2.125rem, 3.8vw, 2.375rem);
+  line-height: 1.1;
   letter-spacing: -0.02em;
-  font-weight: 700;
+  font-weight: 600;
   text-align: center;
+  color: #161616;
 }
 
 .plf-subtitle {
   margin: 0 0 28px;
-  color: var(--ink-muted);
+  max-width: 52ch;
+  margin-left: auto;
+  margin-right: auto;
+  color: #5b5b5b;
   font-size: 16px;
+  font-weight: 400;
   line-height: 1.5;
   text-align: center;
 }
 
 .plf-formBlock {
-  margin-bottom: 20px;
+  margin-bottom: 22px;
+}
+
+.plf-inputRow {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .plf-fieldWrap {
   position: relative;
+  flex: 1;
+  min-width: 0;
 }
 
 .plf-fieldIcon {
@@ -100,18 +116,28 @@ body {
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--ink-meta);
+  width: 16px;
+  height: 16px;
+  color: rgba(22, 22, 22, 0.45);
   pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plf-fieldIcon svg {
+  width: 16px;
+  height: 16px;
 }
 
 .plf-input {
   width: 100%;
-  height: 52px;
-  padding: 0 14px 0 44px;
-  border: 1px solid var(--line);
+  height: 50px;
+  padding: 0 14px 0 42px;
+  border: 1px solid var(--line-input);
   border-radius: 14px;
   background: #fff;
-  color: var(--ink);
+  color: #1a1a1a;
   font-size: 16px;
   line-height: 1;
   outline: none;
@@ -119,45 +145,55 @@ body {
 }
 
 .plf-input::placeholder {
-  color: #888;
+  color: #8a8a8a;
 }
 
 .plf-input:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(200, 162, 74, 0.18);
+  box-shadow: 0 0 0 4px rgba(200, 162, 74, 0.14);
 }
 
 .plf-submitRow {
-  margin-top: 12px;
+  flex-shrink: 0;
 }
 
 .plf-button {
-  min-height: 44px;
+  height: 44px;
   border: none;
   border-radius: 999px;
-  background: var(--ink);
+  background: #161616;
   color: #fff;
   font-size: 15px;
   font-weight: 600;
-  padding: 10px 18px;
+  padding: 0 18px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 10px;
   cursor: pointer;
-  transition: background-color 140ms ease, transform 90ms ease;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.1);
+  transition: background-color 140ms ease;
+  width: 100%;
+}
+
+.plf-button .plf-buttonIcon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 
 .plf-button:hover:not(:disabled) {
-  background: #2a2a2a;
+  background: #1f1f1f;
 }
 
 .plf-button:active:not(:disabled) {
-  transform: translateY(1px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 .plf-button:disabled {
   background: #9c9c9c;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .plf-spinner {
@@ -178,37 +214,47 @@ body {
 .plf-emptyCard,
 .plf-resultsCard,
 .plf-loadingCard {
-  background: var(--card);
-  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(22, 22, 22, 0.1);
   border-radius: 18px;
-  padding: 18px 20px;
+  padding: 18px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.06);
 }
 
 .plf-emptyCard {
-  opacity: 0.9;
+  opacity: 1;
 }
 
 .plf-emptyTitle {
-  margin: 0 0 10px;
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--ink-muted);
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2a2a2a;
 }
 
 .plf-examples {
   margin: 0;
   padding-left: 20px;
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--ink-meta);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #5b5b5b;
 }
 
 .plf-examples li {
-  margin: 4px 0;
+  margin: 2px 0;
+}
+
+.plf-disclaimer {
+  margin: 12px 0 0;
+  font-size: 12px;
+  color: #7b7b7b;
+  line-height: 1.4;
 }
 
 .plf-resultsCard {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  background: #fff;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.06);
 }
 
 .plf-warning {
@@ -269,7 +315,7 @@ body {
   border-radius: 14px;
   padding: 14px 16px;
   text-decoration: none;
-  color: var(--link);
+  color: #1e3a5f;
   background: #fff;
   transition: background-color 140ms ease, border-color 140ms ease;
 }
@@ -279,11 +325,17 @@ body {
   border-color: rgba(200, 162, 74, 0.45);
 }
 
+.plf-linkRow:hover .plf-linkMain {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .plf-linkMain {
   font-size: 15px;
   font-weight: 600;
-  color: var(--link);
+  color: #1e3a5f;
   line-height: 1.3;
+  text-decoration: none;
 }
 
 .plf-linkAux {
@@ -317,17 +369,18 @@ body {
 .plf-quietBtn {
   border: none;
   background: none;
-  color: var(--link);
+  color: #1e3a5f;
   padding: 0;
   font-size: 13px;
   font-weight: 500;
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  text-decoration: none;
   cursor: pointer;
 }
 
 .plf-quietBtn:hover {
   color: #17314f;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .plf-toast {
@@ -345,7 +398,7 @@ body {
 }
 
 .plf-loadingCard {
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.05);
 }
 
 .plf-skeleton {
@@ -389,5 +442,26 @@ body {
 @media (min-width: 768px) {
   .plf-page {
     padding: 48px;
+    padding-top: 56px;
+  }
+
+  .plf-inputRow {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .plf-fieldWrap {
+    flex: 0 1 75%;
+  }
+
+  .plf-submitRow {
+    flex: 0 0 25%;
+    min-width: 0;
+  }
+
+  .plf-button {
+    width: 100%;
+    min-width: 120px;
   }
 }

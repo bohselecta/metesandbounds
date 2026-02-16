@@ -95,33 +95,37 @@ export default function Home() {
 
         <section className="plf-formBlock">
           <form onSubmit={handleSubmit}>
-            <div className="plf-fieldWrap">
-              <span className="plf-fieldIcon" aria-hidden="true">
-                <PinIcon />
-              </span>
-              <input
-                ref={inputRef}
-                className="plf-input"
-                type="text"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                placeholder="Street address, city, state, ZIP"
-              />
-            </div>
-            <div className="plf-submitRow">
-              <button type="submit" className="plf-button" disabled={loading}>
-                {loading ? (
-                  <>
-                    <span className="plf-spinner" aria-hidden="true" />
-                    Searching…
-                  </>
-                ) : (
-                  <>
-                    Find link
-                    <ArrowRightIcon />
-                  </>
-                )}
-              </button>
+            <div className="plf-inputRow">
+              <div className="plf-fieldWrap">
+                <span className="plf-fieldIcon" aria-hidden="true">
+                  <PinIcon />
+                </span>
+                <input
+                  ref={inputRef}
+                  className="plf-input"
+                  type="text"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="Street address, city, state, ZIP"
+                />
+              </div>
+              <div className="plf-submitRow">
+                <button type="submit" className="plf-button" disabled={loading}>
+                  {loading ? (
+                    <>
+                      <span className="plf-spinner" aria-hidden="true" />
+                      Searching…
+                    </>
+                  ) : (
+                    <>
+                      Find link
+                      <span className="plf-buttonIcon" aria-hidden="true">
+                        <ArrowRightIcon />
+                      </span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </form>
         </section>
@@ -207,6 +211,9 @@ export default function Home() {
                       Copy link
                     </button>
                   </div>
+                  <p className="plf-disclaimer">
+                    Public sources only. Verify with the county.
+                  </p>
                 </div>
               ) : null}
             </div>
@@ -220,6 +227,9 @@ export default function Home() {
                 <li>4101 Lankershim Blvd, North Hollywood, CA 91602</li>
                 <li>120 N LaSalle St, Chicago, IL 60602</li>
               </ul>
+              <p className="plf-disclaimer">
+                Public sources only. Verify with the county.
+              </p>
             </div>
           )}
         </section>
@@ -232,7 +242,7 @@ export default function Home() {
 
 function PinIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path
         d="M12 21s-6.5-5.44-6.5-10A6.5 6.5 0 0 1 18.5 11c0 4.56-6.5 10-6.5 10Z"
         stroke="currentColor"
@@ -245,7 +255,7 @@ function PinIcon() {
 
 function ArrowRightIcon() {
   return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path
         d="M5 12h14m0 0-5-5m5 5-5 5"
         stroke="currentColor"
